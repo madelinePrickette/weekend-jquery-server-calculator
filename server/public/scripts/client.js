@@ -27,7 +27,7 @@ function displayEquations(arr) {
     $('#answerList').empty()
     for(let equation of arr){
         $('#answerList').append(`
-            <li>${equation.num1}${equation.operator}${equation.num2}=</li>
+            <li>${equation.num0}${equation.operator}${equation.num1}=${equation.solution}</li>
         `)};
 }
 
@@ -50,11 +50,10 @@ function divideButtonClick() {
 
 function sendEquation() {
     console.log('in /POST');
-
     let currentEquation = {
-        num1 : $('#num1').val(),
+        num0 : $('#num0').val(),
         operator: selectedOperator,
-        num2: $('#num2').val()
+        num1: $('#num1').val()
     }
 
     $.ajax({
@@ -63,6 +62,8 @@ function sendEquation() {
         data: currentEquation
     }).then(function(response) {
         console.log(response);
-        retrieveEquations;
+        retrieveEquations(response);
     })
+    $('#num0').val('');
+    $('#num1').val('')
 }

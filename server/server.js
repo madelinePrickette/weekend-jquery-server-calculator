@@ -11,16 +11,35 @@ app.listen(PORT, () => {
     console.log('Server is running...', PORT)
 });
 
-equationArray = [{
-    num1: 3,
-    operator: '+',
-    num2: 2
-}];
+equationArray = [];
 
 app.get('/equations', (req, res) => {
     res.send(equationArray);
 });
 
-app.post('/equations', (req,res) => {
+app.post('/equations', (req, res) => {
+currentEquation = req.body;
+    calculateSolution(currentEquation);
     res.sendStatus(200);
 });
+
+function calculateSolution() {
+        let firstNumber = Number(currentEquation.num0) 
+        let operator = currentEquation.operator
+        let secondNumber = Number(currentEquation.num1)
+    let solution;
+        if(operator == '+') {
+            solution = firstNumber + secondNumber;
+        } else if(operator == '-') {
+            solution = firstNumber - secondNumber;
+        } else if(operator == '*') {
+            solution = firstNumber * secondNumber;
+        } else {
+            solution = firstNumber / secondNumber;
+        }
+    console.log(solution);
+    currentEquation.solution = solution;
+    console.log(currentEquation);
+    equationArray.push(currentEquation);
+    console.log(equationArray);
+}
