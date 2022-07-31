@@ -50,3 +50,9 @@ app.get('/solution', (req, res) => {
     res.send(solutionArray);
     solutionArray = [];
 });
+
+app.post('/clear', (req, res) => {
+    solutionArray = [];
+    equationArray = [];
+    res.sendStatus(200);
+})

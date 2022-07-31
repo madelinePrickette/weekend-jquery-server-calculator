@@ -7,6 +7,7 @@ function onReady() {
     $('#minusButton').on('click', minusButtonClick);
     $('#timesButton').on('click', timesButtonClick);
     $('#divideButton').on('click', divideButtonClick);
+    $('#clearButton').on('click', clearPage);
 }
 
 let selectedOperator;
@@ -38,7 +39,7 @@ function displayEquations(arr) {
     $('#answerList').empty()
     for(let equation of arr){
         $('#answerList').append(`
-            <li>${equation.num0}${equation.operator}${equation.num1}=${equation.solution}</li>
+            <li>${equation.num0} ${equation.operator} ${equation.num1} = ${equation.solution}</li>
         `)};
 }
 
@@ -85,4 +86,17 @@ function sendEquation() {
     $('#num1').val('');
 
     retrieveCurrentAnswer();
+}
+
+function clearPage() {
+    console.log('clear clicked');
+    $.ajax({
+        method: 'POST',
+        url: '/clear'
+    }).then(function(response) {
+        console.log(response);
+        retrieveCurrentAnswer();
+        retrieveEquations();
+    })
+    $('#solutionContainer').empty();
 }
