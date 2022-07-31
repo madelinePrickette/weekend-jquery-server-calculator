@@ -23,11 +23,12 @@ currentEquation = req.body;
     res.sendStatus(200);
 });
 
+let solutionArray = [];
+
 function calculateSolution() {
         let firstNumber = Number(currentEquation.num0) 
         let operator = currentEquation.operator
         let secondNumber = Number(currentEquation.num1)
-    let solution;
         if(operator == '+') {
             solution = firstNumber + secondNumber;
         } else if(operator == '-') {
@@ -39,7 +40,13 @@ function calculateSolution() {
         }
     console.log(solution);
     currentEquation.solution = solution;
+    solutionArray.push(solution);
     console.log(currentEquation);
     equationArray.push(currentEquation);
     console.log(equationArray);
 }
+
+app.get('/solution', (req, res) => {
+    res.send(solutionArray);
+    solutionArray = [];
+});

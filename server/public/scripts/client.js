@@ -22,6 +22,17 @@ function retrieveEquations() {
     })
 }
 
+function retrieveCurrentAnswer() {
+    $.ajax({
+        method: 'GET',
+        url: '/solution'
+    }).then(function(response) {
+        console.log(response)
+        // this should be the current solution.
+        displaySolution(response);
+    })
+}
+
 function displayEquations(arr) {
     //console.log(arr);
     $('#answerList').empty()
@@ -29,6 +40,12 @@ function displayEquations(arr) {
         $('#answerList').append(`
             <li>${equation.num0}${equation.operator}${equation.num1}=${equation.solution}</li>
         `)};
+}
+
+function displaySolution(response) {
+    for(let solution of response){
+    $('#solutionContainer').text(solution);
+    }
 }
 
 function plusButtonClick() {
@@ -65,5 +82,7 @@ function sendEquation() {
         retrieveEquations(response);
     })
     $('#num0').val('');
-    $('#num1').val('')
+    $('#num1').val('');
+
+    retrieveCurrentAnswer();
 }
